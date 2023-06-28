@@ -20,10 +20,23 @@
 
 </div>
 </div>
-<!-- utils -->
+<!-- UTILS -->
 <div class="display-utils">
-<button type="" @click.prevent="handleSaveSample">save this as sample</button>
-<button type="" @click.prevent="handleLoadSample">load Sample grid</button>
+<button type="" @click.prevent="handleSave">Save to LS</button>
+
+<h3>{{gridsList}}</h3>
+<select v-model="gridSelection">
+
+  <option v-for="(grid, index) in gridsList" :key="index" :value="grid">{{ grid }}</option>
+
+<!-- <option value="defaultGrid">defaultGrid</option>
+<option value="grid-24">grid-24</option>
+<option value="grid-65">grid-65</option>
+<option value="grid-78">grid-78</option> -->
+
+</select>
+<button type="" @click.prevent="handleLoadGrid">load</button>
+
 
 </div>
 
@@ -35,22 +48,32 @@
 import { useGridStore } from '../../store/grid.js'
 const store = useGridStore()
 
+
 onBeforeMount(() => {
 // this just loads the default grid onto LS
 store.setInitialStorage()
 
-}),
+});
+
+const gridsList = ref(null)
+
 onMounted(() => {
-  store.getDefaultGrid()
+  store.getDefaultGrid();
+    gridsList.value = store.getGridList()
+  ;
 })
 
-const handleSaveSample = () => {
-    store.saveGrid("sampleGrid")
+const handleSave = () => {
+    store.saveGrid(`grid-${Math.floor(Math.random() * 1000000)}`);
+        gridsList.value = store.getGridList()
+
 }
 
-const handleLoadSample = () => {
-    console.log('load sample grid');
-    store.loadGrid("sampleGrid")
+const gridSelection = ref('defaultGrid')
+
+const handleLoadGrid = () => {
+    console.log('load grid: ', gridSelection.value);
+    store.loadGrid(gridSelection.value)
 }
 
 

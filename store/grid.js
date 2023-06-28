@@ -43,7 +43,7 @@ export const useGridStore = defineStore('grid', {
         doubleCount: (state) => state.count * 2,
         workingCells: (state) => {
             return parseInt(state.workingGrid[0].meta.rows) * parseInt(state.workingGrid[0].meta.columns)
-        }
+        },
     },
     actions: {
         increment() {
@@ -61,16 +61,44 @@ export const useGridStore = defineStore('grid', {
                 this.gridLoaded = true;
             }
         },
+        getGridList() {
+            const keys = Object.keys(localStorage);
+
+            // Filter the keys based on the content type
+            const filteredKeys = keys.filter(key => {
+                // Retrieve the value associated with each key
+                const value = localStorage.getItem(key);
+                // console.log("key", key);
+
+                if (value.includes("meta")) {
+                    return key;
+                }
+
+                // return value.includes("meta");
+                // Check if the value matches the desired content type
+                // return typeof value === contentType;
+            });
+
+            // Retrieve the values associated with the filtered keys
+            // const filteredValues = filteredKeys.map(key => localStorage.getItem(key));
+
+            // Return the filtered values
+            return filteredKeys;
+        },
         saveGrid(name) {
             // CHANGE THIS TO WORKING GRID:
-            const jsonObject = this.sampleGrid;
+            const jsonObject = this.workingGrid;
 
             localStorage.setItem(name, JSON.stringify(jsonObject));
         },
         loadGrid(name) {
             this.workingGrid = null;
-            console.log('loadGrid :', name)
+            console.log("loadGrid name ", name)
+
             this.workingGrid = JSON.parse(localStorage.getItem(name));
+
+            console.log("this.workingGrid", this.workingGrid)
+
             if (this.workingGrid) {
                 this.gridLoaded = true;
             }

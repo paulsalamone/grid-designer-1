@@ -9,9 +9,9 @@
 </main>
 
   <!-- footer -->
-  <footer class="footer">
+  <!-- <footer class="footer">
     <p>footer</p>
-    </footer>
+    </footer> -->
 </div>
 </template>
 
