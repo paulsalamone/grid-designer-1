@@ -2,13 +2,13 @@
 <div>
 <h4>Meta Designer
 </h4>
-<!-- <p >Cells: {{store.workingCells}}</p> -->
+
 <!-- ROWS -->
 
 <div>
 <label for="rows">Rows: {{rows}}</label><br/>
 
-<input name="rows" type="range" min="1" max="20" v-model="rows"
+<input name="rows" type="range" min="1" :max="store.maxRows" v-model="rows"
 @change="store.handleMeta('rows', rows)"
 />
 <br/><br/>
@@ -17,13 +17,13 @@
 
 <label for="columns">Columns: {{columns}}</label><br/>
 
-<input name="columns" type="range" min="1" max="20" v-model="columns" @change="store.handleMeta('columns', columns)"/>
+<input name="columns" type="range" min="1" :max="store.maxColumns" v-model="columns" @change="store.handleMeta('columns', columns)"/>
 </div>
 <br/><br/>
 <!-- GAP -->
 <label for="gap">Gap: {{gap}}</label><br/>
 
-<input name="gap" type="range" min="1" max="20" v-model="gap" @change="store.handleMeta('gap', gap)"/>
+<input name="gap" type="range" min="1" max="40" v-model="gap" @change="store.handleMeta('gap', gap)"/>
 <br/><br/>
 
 <!-- BG COLOR -->

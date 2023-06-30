@@ -4,15 +4,16 @@
 
 <div class="display-grid"
 :style="{
-    gridTemplateColumns:  `repeat(${store.workingGrid[0].meta.columns}, 1fr)`,
-    gridTemplateRows: `repeat(${store.workingGrid[0].meta.rows}, 1fr)`,
-    gap: `${store.workingGrid[0].meta.gap}px`,
-    backgroundColor: `hsl(${store.workingGrid[0].meta.backgroundColor}, 50%, 50%)`
+    gridTemplateColumns:  `repeat(${store.workingGrid.columns}, 1fr)`,
+    gridTemplateRows: `repeat(${store.workingGrid.rows}, 1fr)`,
+    gap: `${store.workingGrid.gap}px`,
+    backgroundColor: `hsl(${store.workingGrid.backgroundColor}, 50%, 50%)`
 }"
 > 
-<div v-if="store.gridLoaded" class="cell" v-for="(cell, index) in store.workingGrid[0].cells" :key="index"
+<div v-if="store.gridLoaded" class="cell" v-for="(cell, index) in store.workingGrid.cells" :key="index"
 :style="{
-    backgroundColor: cell.bg
+    backgroundColor: cell.backgroundColor,
+    borderWidth: `${cell.borderWidth}px`,
 }"
 
 >
@@ -28,11 +29,6 @@
 <select v-model="gridSelection">
 
   <option v-for="(grid, index) in gridsList" :key="index" :value="grid">{{ grid }}</option>
-
-<!-- <option value="defaultGrid">defaultGrid</option>
-<option value="grid-24">grid-24</option>
-<option value="grid-65">grid-65</option>
-<option value="grid-78">grid-78</option> -->
 
 </select>
 <button type="" @click.prevent="handleLoadGrid">load</button>
@@ -52,7 +48,6 @@ const store = useGridStore()
 onBeforeMount(() => {
 // this just loads the default grid onto LS
 store.setInitialStorage()
-
 });
 
 const gridsList = ref(null)

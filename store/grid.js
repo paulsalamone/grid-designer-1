@@ -3,52 +3,40 @@ import { defineStore } from 'pinia'
 export const useGridStore = defineStore('grid', {
     state: () => ({
         gridLoaded: false,
-        defaultGrid: [{
-            "meta": {
-                "name": "default",
-                "columns": "2",
-                "rows": "2",
-                "gap": "5px",
-                "backgroundColor": "red"
-            },
+        defaultGrid: {
+            "type": "grid",
+            "name": "default",
+            "columns": "3",
+            "rows": "3",
+            "gap": "5",
+            "backgroundColor": "10",
             "cells": [
-                { id: 0, bg: "tan" },
-                { id: 1, bg: "yellow" },
-                { id: 2, bg: "orange" },
-                { id: 3, bg: "lime" },
+                { id: 0, backgroundColor: "white", borderWidth: "1", borderColor: "black" },
+                { id: 1, backgroundColor: "white", borderWidth: "1", borderColor: "black" },
+                { id: 2, backgroundColor: "white", borderWidth: "1", borderColor: "black" },
+                { id: 3, backgroundColor: "white", borderWidth: "1", borderColor: "black" },
+                { id: 4, backgroundColor: "white", borderWidth: "1", borderColor: "black" },
+                { id: 5, backgroundColor: "white", borderWidth: "1", borderColor: "black" },
+                { id: 6, backgroundColor: "white", borderWidth: "1", borderColor: "black" },
+                { id: 7, backgroundColor: "white", borderWidth: "1", borderColor: "black" },
+                { id: 8, backgroundColor: "white", borderWidth: "1", borderColor: "black" },
             ]
-        }
-        ],
-        sampleGrid: [{
-            "meta": {
-                "name": "sample",
-                "columns": "1fr 1fr 1fr",
-                "rows": "1fr 1fr",
-                "gap": "10px",
-                "backgroundColor": "green"
-            },
-            "cells": [
-                { id: 0, bg: '#FF0000' },
-                { id: 1, bg: '#00FF00' },
-                { id: 2, bg: '#0000FF' },
-                { id: 3, bg: '#FFFF00' },
-                { id: 4, bg: '#00FFFF' },
-                { id: 5, bg: '#FF00FF' }
-            ]
-        }
-        ],
-        workingGrid: null
+        },
+        workingGrid: null,
+        referenceCells: null,
+        maxRows: 20,
+        maxColumns: 20,
     }),
     getters: {
-        doubleCount: (state) => state.count * 2,
-        workingCells: (state) => {
-            return parseInt(state.workingGrid[0].meta.rows) * parseInt(state.workingGrid[0].meta.columns)
+        workingCellAmount: (state) => {
+            return parseInt(state.workingGrid.rows) * parseInt(state.workingGrid.columns)
         },
+        maxCellAmount: (state) => {
+            return state.maxRows * state.maxColumns;
+        }
     },
     actions: {
-        increment() {
-            this.count++
-        },
+        //  STORAGE
         setInitialStorage() {
             // set LS to default grid
             const jsonObject = this.defaultGrid
@@ -57,6 +45,10 @@ export const useGridStore = defineStore('grid', {
         },
         getDefaultGrid() {
             this.workingGrid = JSON.parse(localStorage.getItem("defaultGrid"));
+
+            this.referenceCells = this.workingGrid.cells;
+
+
             if (this.workingGrid !== null) {
                 this.gridLoaded = true;
             }
@@ -64,25 +56,18 @@ export const useGridStore = defineStore('grid', {
         getGridList() {
             const keys = Object.keys(localStorage);
 
-            // Filter the keys based on the content type
-            const filteredKeys = keys.filter(key => {
-                // Retrieve the value associated with each key
-                const value = localStorage.getItem(key);
-                // console.log("key", key);
 
-                if (value.includes("meta")) {
+            const filteredKeys = keys.filter(key => {
+
+                const value = localStorage.getItem(key);
+
+                if (value.includes("grid")) {
                     return key;
                 }
 
-                // return value.includes("meta");
-                // Check if the value matches the desired content type
-                // return typeof value === contentType;
             });
 
-            // Retrieve the values associated with the filtered keys
-            // const filteredValues = filteredKeys.map(key => localStorage.getItem(key));
 
-            // Return the filtered values
             return filteredKeys;
         },
         saveGrid(name) {
@@ -93,39 +78,48 @@ export const useGridStore = defineStore('grid', {
         },
         loadGrid(name) {
             this.workingGrid = null;
-            console.log("loadGrid name ", name)
 
             this.workingGrid = JSON.parse(localStorage.getItem(name));
 
-            console.log("this.workingGrid", this.workingGrid)
+
 
             if (this.workingGrid) {
                 this.gridLoaded = true;
             }
         },
         // META
-        setCells() {
-            this.workingGrid[0].cells = []
-
-
-            for (let i = 0; i < this.workingCells; i++) {
-                this.workingGrid[0].cells.push({ id: i, bg: 'white' })
+        setCellAmount() {
+            this.workingGrid.cells = []
+            for (let i = 0; i < this.workingCellAmount; i++) {
+                this.workingGrid.cells.push({ id: i, backgroundColor: 'white' })
             }
         },
         handleMeta(att, val) {
-            console.log("att, val", att, val)
-
-            // if rows or columns, update cells
-            this.workingGrid[0].meta[att] = val;
-
+            this.workingGrid[att] = val;
 
             if (att === 'rows' || att === 'columns') {
-
-
-                this.setCells()
+                this.setCellAmount()
             }
 
-        }
+
+        },
         // CELLS
+        setCellDesign(att, val) {
+            console.log("setCellDesign", att, val)
+            for (let i = 0; i < this.maxCellAmount; i++) {
+
+                this.workingGrid.cells[i][att] = val;
+
+            }
+
+
+        },
+        handleCells(att, val) {
+            this.workingGrid[att] = val;
+        },
+        randomizeCells(type) {
+
+        }
+
     }
 })
