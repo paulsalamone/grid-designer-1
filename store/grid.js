@@ -11,7 +11,7 @@ export const useGridStore = defineStore('grid', {
             "gap": "5",
             "backgroundColor": "10",
             "cells": [
-                { id: 0, backgroundColor: "white", borderWidth: "1", borderColor: "black" },
+                { id: 0, backgroundColor: "blue", borderWidth: "1", borderColor: "black" },
                 { id: 1, backgroundColor: "white", borderWidth: "1", borderColor: "black" },
                 { id: 2, backgroundColor: "white", borderWidth: "1", borderColor: "black" },
                 { id: 3, backgroundColor: "white", borderWidth: "1", borderColor: "black" },
@@ -19,7 +19,7 @@ export const useGridStore = defineStore('grid', {
                 { id: 5, backgroundColor: "white", borderWidth: "1", borderColor: "black" },
                 { id: 6, backgroundColor: "white", borderWidth: "1", borderColor: "black" },
                 { id: 7, backgroundColor: "white", borderWidth: "1", borderColor: "black" },
-                { id: 8, backgroundColor: "white", borderWidth: "1", borderColor: "black" },
+                { id: 8, backgroundColor: "red", borderWidth: "1", borderColor: "black" },
             ]
         },
         workingGrid: null,
@@ -88,7 +88,7 @@ export const useGridStore = defineStore('grid', {
             }
         },
         // META
-        setCellAmount() {
+        setCellCollection() {
             this.workingGrid.cells = []
             for (let i = 0; i < this.workingCellAmount; i++) {
                 this.workingGrid.cells.push({ id: i, backgroundColor: 'white' })
@@ -98,7 +98,7 @@ export const useGridStore = defineStore('grid', {
             this.workingGrid[att] = val;
 
             if (att === 'rows' || att === 'columns') {
-                this.setCellAmount()
+                this.setCellCollection()
             }
 
 
@@ -106,8 +106,9 @@ export const useGridStore = defineStore('grid', {
         // CELLS
         setCellDesign(att, val) {
             console.log("setCellDesign", att, val)
-            for (let i = 0; i < this.maxCellAmount; i++) {
-
+            for (let i = 0; i < this.workingCellAmount; i++) {
+                // console.log(`workingCellAmount: ${this.workingCellAmount}`)
+                console.log(`set cell ${i} to ${val}`)
                 this.workingGrid.cells[i][att] = val;
 
             }
