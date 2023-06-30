@@ -8,6 +8,10 @@
 <br/><br/>
 <p>{{borderWidth}}</p>
 <br/><br/>
+<input name="borderColor" type="range" min="1" max="360" v-model="borderColor" @change="store.setCellDesign('borderColor', borderColor)"/>
+<br/><br/>
+<p>{{borderWidth}}</p>
+<br/><br/>
 <button @click.prevent="store.randomizeCells('backgroundColor')" >Randomize Colors</button>
 </div>
 </template>

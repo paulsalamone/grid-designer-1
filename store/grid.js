@@ -5,11 +5,13 @@ export const useGridStore = defineStore('grid', {
         gridLoaded: false,
         defaultGrid: {
             "type": "grid",
-            "name": "default",
-            "columns": "3",
-            "rows": "3",
-            "gap": "5",
-            "backgroundColor": "10",
+            "meta": {
+                "name": "default",
+                "columns": "3",
+                "rows": "3",
+                "gap": "5",
+                "backgroundColor": "10",
+            },
             "cells": [
                 { id: 0, backgroundColor: "blue", borderWidth: "1", borderColor: "black" },
                 { id: 1, backgroundColor: "white", borderWidth: "1", borderColor: "black" },
@@ -22,14 +24,17 @@ export const useGridStore = defineStore('grid', {
                 { id: 8, backgroundColor: "red", borderWidth: "1", borderColor: "black" },
             ]
         },
-        workingGrid: null,
-        referenceCells: null,
+        workingGrid: {
+            meta: null,
+            referenceCells: [],
+            visibleCells: null,
+        },
         maxRows: 20,
         maxColumns: 20,
     }),
     getters: {
         workingCellAmount: (state) => {
-            return parseInt(state.workingGrid.rows) * parseInt(state.workingGrid.columns)
+            return parseInt(state.workingGrid.meta.rows) * parseInt(state.workingGrid.meta.columns)
         },
         maxCellAmount: (state) => {
             return state.maxRows * state.maxColumns;
@@ -44,12 +49,16 @@ export const useGridStore = defineStore('grid', {
             localStorage.setItem("defaultGrid", JSON.stringify(jsonObject));
         },
         getDefaultGrid() {
-            this.workingGrid = JSON.parse(localStorage.getItem("defaultGrid"));
+            const grid = JSON.parse(localStorage.getItem("defaultGrid"));
 
-            this.referenceCells = this.workingGrid.cells;
+            this.workingGrid.meta = grid.meta;
+            this.workingGrid.visibleCells = grid.cells;
 
+            for (let i = 0; i < this.maxCellAmount; i++) {
+                this.workingGrid.referenceCells.push(this.workingGrid.visibleCells[i])
+            }
 
-            if (this.workingGrid !== null) {
+            if (this.workingGrid.meta !== null) {
                 this.gridLoaded = true;
             }
         },
@@ -77,6 +86,7 @@ export const useGridStore = defineStore('grid', {
             localStorage.setItem(name, JSON.stringify(jsonObject));
         },
         loadGrid(name) {
+            // this is all wrong
             this.workingGrid = null;
 
             this.workingGrid = JSON.parse(localStorage.getItem(name));
@@ -91,11 +101,11 @@ export const useGridStore = defineStore('grid', {
         setCellCollection() {
             this.workingGrid.cells = []
             for (let i = 0; i < this.workingCellAmount; i++) {
-                this.workingGrid.cells.push({ id: i, backgroundColor: 'white' })
+                this.workingGrid.visibleCells.push({ id: i, backgroundColor: 'white' })
             }
         },
         handleMeta(att, val) {
-            this.workingGrid[att] = val;
+            this.workingGrid.meta[att] = val;
 
             if (att === 'rows' || att === 'columns') {
                 this.setCellCollection()
@@ -107,20 +117,15 @@ export const useGridStore = defineStore('grid', {
         setCellDesign(att, val) {
             console.log("setCellDesign", att, val)
             for (let i = 0; i < this.workingCellAmount; i++) {
-                // console.log(`workingCellAmount: ${this.workingCellAmount}`)
+
                 console.log(`set cell ${i} to ${val}`)
-                this.workingGrid.cells[i][att] = val;
+                this.workingGrid.visibleCells[i][att] = val;
 
             }
 
 
         },
-        handleCells(att, val) {
-            this.workingGrid[att] = val;
-        },
-        randomizeCells(type) {
 
-        }
 
     }
 })

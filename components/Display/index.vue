@@ -4,16 +4,17 @@
 
 <div class="display-grid"
 :style="{
-    gridTemplateColumns:  `repeat(${store.workingGrid.columns}, 1fr)`,
-    gridTemplateRows: `repeat(${store.workingGrid.rows}, 1fr)`,
-    gap: `${store.workingGrid.gap}px`,
-    backgroundColor: `hsl(${store.workingGrid.backgroundColor}, 50%, 50%)`
+    gridTemplateColumns:  `repeat(${store.workingGrid.meta.columns}, 1fr)`,
+    gridTemplateRows: `repeat(${store.workingGrid.meta.rows}, 1fr)`,
+    gap: `${store.workingGrid.meta.gap}px`,
+    backgroundColor: `hsl(${store.workingGrid.meta.backgroundColor}, 50%, 50%)`
 }"
 > 
-<div v-if="store.gridLoaded" class="cell" v-for="(cell, index) in store.workingGrid.cells" :key="index"
+<div v-if="store.gridLoaded" class="cell" v-for="(cell, index) in store.workingGrid.visibleCells" :key="index"
 :style="{
     backgroundColor: cell.backgroundColor,
     borderWidth: `${cell.borderWidth}px`,
+    borderColor: `hsl(${cell.borderColor}, 100%, 50%)`,
 }"
 
 >
