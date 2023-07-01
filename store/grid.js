@@ -2,43 +2,33 @@ import { defineStore } from 'pinia'
 
 export const useGridStore = defineStore('grid', {
     state: () => ({
-        gridLoaded: false,
         defaultGrid: {
             "type": "grid",
             "meta": {
                 "name": "default",
-                "columns": "3",
-                "rows": "3",
-                "gap": "5",
-                "backgroundColor": "10",
-            },
-            "cells": [
-                { id: 0, backgroundColor: "blue", borderWidth: "1", borderColor: "black" },
-                { id: 1, backgroundColor: "white", borderWidth: "1", borderColor: "black" },
-                { id: 2, backgroundColor: "white", borderWidth: "1", borderColor: "black" },
-                { id: 3, backgroundColor: "white", borderWidth: "1", borderColor: "black" },
-                { id: 4, backgroundColor: "white", borderWidth: "1", borderColor: "black" },
-                { id: 5, backgroundColor: "white", borderWidth: "1", borderColor: "black" },
-                { id: 6, backgroundColor: "white", borderWidth: "1", borderColor: "black" },
-                { id: 7, backgroundColor: "white", borderWidth: "1", borderColor: "black" },
-                { id: 8, backgroundColor: "red", borderWidth: "1", borderColor: "black" },
-            ]
+                "columns": 4,
+                "rows": 4,
+                "gap": 5,
+                "backgroundColor": 200,
+            }
         },
         workingGrid: {
             meta: null,
-            referenceCells: [],
-            visibleCells: null,
+            cells: [],
         },
         maxRows: 20,
         maxColumns: 20,
+        gridLoaded: false,
+
     }),
     getters: {
-        workingCellAmount: (state) => {
-            return parseInt(state.workingGrid.meta.rows) * parseInt(state.workingGrid.meta.columns)
+        visibleCellAmount: (state) => {
+            return state.workingGrid.meta.rows * state.workingGrid.meta.columns
         },
         maxCellAmount: (state) => {
             return state.maxRows * state.maxColumns;
-        }
+        },
+
     },
     actions: {
         //  STORAGE
@@ -49,14 +39,28 @@ export const useGridStore = defineStore('grid', {
             localStorage.setItem("defaultGrid", JSON.stringify(jsonObject));
         },
         getDefaultGrid() {
+
             const grid = JSON.parse(localStorage.getItem("defaultGrid"));
 
-            this.workingGrid.meta = grid.meta;
-            this.workingGrid.visibleCells = grid.cells;
 
+            this.workingGrid.meta = grid.meta;
+            // this.workingGrid.cells = grid.cells;
+            console.log("this.workingGrid.meta", this.workingGrid.meta)
             for (let i = 0; i < this.maxCellAmount; i++) {
-                this.workingGrid.referenceCells.push(this.workingGrid.visibleCells[i])
+
+                this.workingGrid.cells.push(
+                    { id: i, backgroundColor: "hsl(100,100%,100%)", borderWidth: "1", borderColor: "black" }
+                )
+
             }
+
+            console.log("default grid loaded:", this.workingGrid.cells)
+
+
+
+
+
+
 
             if (this.workingGrid.meta !== null) {
                 this.gridLoaded = true;
@@ -80,48 +84,72 @@ export const useGridStore = defineStore('grid', {
             return filteredKeys;
         },
         saveGrid(name) {
-            // CHANGE THIS TO WORKING GRID:
+            // REFACTOR????:
             const jsonObject = this.workingGrid;
 
             localStorage.setItem(name, JSON.stringify(jsonObject));
         },
         loadGrid(name) {
-            // this is all wrong
+            // REFACTOR!!!!
             this.workingGrid = null;
 
             this.workingGrid = JSON.parse(localStorage.getItem(name));
-
-
 
             if (this.workingGrid) {
                 this.gridLoaded = true;
             }
         },
         // META
-        setCellCollection() {
-            this.workingGrid.cells = []
-            for (let i = 0; i < this.workingCellAmount; i++) {
-                this.workingGrid.visibleCells.push({ id: i, backgroundColor: 'white' })
-            }
-        },
+
         handleMeta(att, val) {
             this.workingGrid.meta[att] = val;
 
             if (att === 'rows' || att === 'columns') {
-                this.setCellCollection()
+
+                if (this.workingGrid.cells.length > this.visibleCellAmount) {
+
+                    this.workingGrid.cells.splice(this.visibleCellAmount, difference)
+
+                }
+
             }
 
 
         },
-        // CELLS
+        // cells
+
+        randomHSL() {
+            const H = Math.floor(Math.random() * 360)
+            const S = Math.floor(Math.random() * 100)
+            const L = Math.floor(Math.random() * 100)
+
+            return `hsl(${H}, ${S}%, ${L}%)`;
+
+        },
+        randomizeCells(att) {
+            if (att === "backgroundColor");
+
+            for (let i = 0; i < this.maxCellAmount; i++) {
+                const color = this.randomHSL();
+                // console.log("color", color)
+                this.workingGrid.cells[i][att] = color;
+                console.log("this.workingGrid.cells[i][att]", this.workingGrid.cells[i][att])
+            }
+
+
+
+
+        },
         setCellDesign(att, val) {
             console.log("setCellDesign", att, val)
-            for (let i = 0; i < this.workingCellAmount; i++) {
 
-                console.log(`set cell ${i} to ${val}`)
-                this.workingGrid.visibleCells[i][att] = val;
-
+            // make change to WHOLE ref cells
+            for (let i = 0; i < this.maxCellAmount; i++) {
+                this.workingGrid.cells[i][att] = val
             }
+
+
+
 
 
         },

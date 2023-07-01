@@ -10,15 +10,14 @@
     backgroundColor: `hsl(${store.workingGrid.meta.backgroundColor}, 50%, 50%)`
 }"
 > 
-<div v-if="store.gridLoaded" class="cell" v-for="(cell, index) in store.workingGrid.visibleCells" :key="index"
+<div v-if="store.gridLoaded" class="cell" v-for="index in store.visibleCellAmount" :key="index"
 :style="{
-    backgroundColor: cell.backgroundColor,
-    borderWidth: `${cell.borderWidth}px`,
-    borderColor: `hsl(${cell.borderColor}, 100%, 50%)`,
+    backgroundColor: store.workingGrid.cells[index].backgroundColor,
+
 }"
 
 >
-
+<!-- {{store.workingGrid.cells[index].backgroundColor}} -->
 
 </div>
 </div>
@@ -37,6 +36,7 @@
 
 </div>
 
+
 </client-only>
 </div>
 </template>
@@ -45,7 +45,13 @@
 import { useGridStore } from '../../store/grid.js'
 const store = useGridStore()
 
+const updated = ref(true);
 
+watch(() => store.workingGrid, (val) => {
+    if (val) {
+        updated.value = true;
+    }
+})
 onBeforeMount(() => {
 // this just loads the default grid onto LS
 store.setInitialStorage()

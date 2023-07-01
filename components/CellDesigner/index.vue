@@ -3,7 +3,6 @@
 <h4>Cell Designer
 </h4>
 <label for="borderWidth">Border Width: {{borderWidth}}</label><br/>
-
 <input name="borderWidth" type="range" min="1" max="40" v-model="borderWidth" @change="store.setCellDesign('borderWidth', borderWidth)"/>
 <br/><br/>
 <p>{{borderWidth}}</p>
