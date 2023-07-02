@@ -75,7 +75,7 @@ export const useGridStore = defineStore('grid', {
 
                 const value = localStorage.getItem(key);
 
-                if (value.includes("grid")) {
+                if (value.includes("meta")) {
                     return key;
                 }
 
