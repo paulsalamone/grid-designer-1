@@ -13,6 +13,8 @@
 <div v-if="store.gridLoaded" class="cell" v-for="index in store.visibleCellAmount" :key="index"
 :style="{
     backgroundColor: store.workingGrid.cells[index].backgroundColor,
+    borderColor: `hsl(${store.workingGrid.cells[index].borderColor}, 50%, 50%)`,
+    borderWidth: `${parseInt(store.workingGrid.cells[index].borderWidth)}px`,
 
 }"
 

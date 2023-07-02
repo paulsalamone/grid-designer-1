@@ -3,13 +3,14 @@
 <h4>Cell Designer
 </h4>
 <label for="borderWidth">Border Width: {{borderWidth}}</label><br/>
-<input name="borderWidth" type="range" min="1" max="40" v-model="borderWidth" @change="store.setCellDesign('borderWidth', borderWidth)"/>
+<input name="borderWidth" type="range" min="0" :max="store.maxCellBorderWidth" step="1" v-model="borderWidth" @change="store.setCellDesign('borderWidth', borderWidth)"/>
 <br/><br/>
 <p>{{borderWidth}}</p>
+<p>maxCellBorderWidth: {{maxCellBorderWidth}}</p>
 <br/><br/>
+<label for="borderWidth">Border Color: {{borderColor}}</label><br/>
 <input name="borderColor" type="range" min="1" max="360" v-model="borderColor" @change="store.setCellDesign('borderColor', borderColor)"/>
 <br/><br/>
-<p>{{borderWidth}}</p>
 <br/><br/>
 <button @click.prevent="store.randomizeCells('backgroundColor')" >Randomize Colors</button>
 </div>
@@ -20,5 +21,6 @@ import { useGridStore } from '../../store/grid.js'
 const store = useGridStore()
 
 const borderWidth = ref(1)
+const borderColor = ref(1)
 
 </script>

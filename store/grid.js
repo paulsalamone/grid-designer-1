@@ -2,6 +2,9 @@ import { defineStore } from 'pinia'
 
 export const useGridStore = defineStore('grid', {
     state: () => ({
+        maxRows: 40,
+        maxColumns: 40,
+        maxCellBorderWidth: 10,
         defaultGrid: {
             "type": "grid",
             "meta": {
@@ -16,8 +19,6 @@ export const useGridStore = defineStore('grid', {
             meta: null,
             cells: [],
         },
-        maxRows: 20,
-        maxColumns: 20,
         gridLoaded: false,
 
     }),
@@ -49,7 +50,7 @@ export const useGridStore = defineStore('grid', {
             for (let i = 0; i < this.maxCellAmount; i++) {
 
                 this.workingGrid.cells.push(
-                    { id: i, backgroundColor: "hsl(100,100%,100%)", borderWidth: "1", borderColor: "black" }
+                    { id: i, backgroundColor: "hsl(100,100%,100%)", borderWidth: "1", borderColor: "hsl(100,100%,50%)" }
                 )
 
             }
@@ -104,17 +105,6 @@ export const useGridStore = defineStore('grid', {
         handleMeta(att, val) {
             this.workingGrid.meta[att] = val;
 
-            if (att === 'rows' || att === 'columns') {
-
-                if (this.workingGrid.cells.length > this.visibleCellAmount) {
-
-                    this.workingGrid.cells.splice(this.visibleCellAmount, difference)
-
-                }
-
-            }
-
-
         },
         // cells
 
@@ -131,7 +121,6 @@ export const useGridStore = defineStore('grid', {
 
             for (let i = 0; i < this.maxCellAmount; i++) {
                 const color = this.randomHSL();
-                // console.log("color", color)
                 this.workingGrid.cells[i][att] = color;
                 console.log("this.workingGrid.cells[i][att]", this.workingGrid.cells[i][att])
             }
@@ -143,13 +132,9 @@ export const useGridStore = defineStore('grid', {
         setCellDesign(att, val) {
             console.log("setCellDesign", att, val)
 
-            // make change to WHOLE ref cells
             for (let i = 0; i < this.maxCellAmount; i++) {
                 this.workingGrid.cells[i][att] = val
             }
-
-
-
 
 
         },
