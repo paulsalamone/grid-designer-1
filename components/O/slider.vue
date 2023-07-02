@@ -2,22 +2,23 @@
 <div>
 
 <div v-if="paramType === 'HSL'">
-<p>{{destination}}:</p>
+<!-- <p>{{destination}}:</p> -->
 <label for="hue">Hue: {{hsl.hue}}</label><br/>
-<input name="hue" type="range" min="0" max="360" step="1" v-model="hsl.hue" @change="store.setCellDesign('backgroundColor', hslString)">
+<input name="hue" type="range" min="0" max="360" step="1" v-model="hsl.hue" @change="store.setParameter(destination, name, hslString)">
+{{attribute}}
 <br/><br/>
 <label for="saturation">Saturation: {{hsl.saturation}}</label><br/>
-<input name="saturation" type="range" min="0" max="100" step="1" v-model="hsl.saturation" @change="store.setCellDesign('backgroundColor', hslString)">
+<input name="saturation" type="range" min="0" max="100" step="1" v-model="hsl.saturation" @change="store.setParameter(destination, name, hslString)">
 <br/><br/>
 <label for="lightness">Lightness: {{hsl.lightness}}</label><br/>
-<input name="lightness" type="range" min="0" max="100" step="1" v-model="hsl.lightness" @change="store.setCellDesign('backgroundColor', hslString)">
+<input name="lightness" type="range" min="0" max="100" step="1" v-model="hsl.lightness" @change="store.setParameter(destination, name, hslString)">
 <br/><br/>
-<p>{{hsl}}</p>
+<!-- <p>{{hsl}}</p> -->
 </div>
 
 <div v-else>
 <label :for="name">{{name}}: {{sliderValue}}</label><br/>
-<input :name="name" type="range" :min="min" :max="max" :step="step" v-model="sliderValue" @change="store.setCellDesign(name, sliderValue)"/>
+<input :name="name" type="range" :min="min" :max="max" :step="step" v-model="sliderValue" @change="store.setParameter(destination, name, sliderValue)"/>
 <br/><br/>
 </div>
 
@@ -38,7 +39,7 @@ const hsl = ref({
 
 const hslString = computed(() => {
     const str =  `hsl(${hsl.value.hue}, ${hsl.value.saturation}%, ${hsl.value.lightness}%)`
-    console.log("typoeof str", typeof str)
+    // console.log("typoeof str", typeof str)
     return str
 })
 // const hueValue = ref(null)

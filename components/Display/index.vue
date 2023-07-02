@@ -7,13 +7,13 @@
     gridTemplateColumns:  `repeat(${store.workingGrid.meta.columns}, 1fr)`,
     gridTemplateRows: `repeat(${store.workingGrid.meta.rows}, 1fr)`,
     gap: `${store.workingGrid.meta.gap}px`,
-    backgroundColor: `hsl(${store.workingGrid.meta.backgroundColor}, 50%, 50%)`
+    backgroundColor: store.workingGrid.meta.backgroundColor,
 }"
 > 
 <div v-if="store.gridLoaded" class="cell" v-for="index in store.visibleCellAmount" :key="index"
 :style="{
     backgroundColor: store.workingGrid.cells[index].backgroundColor,
-    borderColor: `hsl(${store.workingGrid.cells[index].borderColor}, 50%, 50%)`,
+    borderColor: store.workingGrid.cells[index].borderColor,
     borderWidth: `${parseInt(store.workingGrid.cells[index].borderWidth)}px`,
 
 }"

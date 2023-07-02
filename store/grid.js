@@ -55,7 +55,7 @@ export const useGridStore = defineStore('grid', {
 
             }
 
-            console.log("default grid loaded:", this.workingGrid.cells)
+            // console.log("default grid loaded:", this.workingGrid.cells)
 
 
 
@@ -102,10 +102,7 @@ export const useGridStore = defineStore('grid', {
         },
         // META
 
-        handleMeta(att, val) {
-            this.workingGrid.meta[att] = val;
 
-        },
         // cells
 
         randomHSL() {
@@ -129,14 +126,49 @@ export const useGridStore = defineStore('grid', {
 
 
         },
-        setCellDesign(att, val) {
-            console.log("setCellDesign: ", att, val)
+
+        setParameter(destination, attribute, value) {
+
+            console.log("setParameter", destination, attribute, value)
+
+            if (destination === "cells") {
+                this.setCells(attribute, value)
+            }
+
+            if (destination === "meta") {
+                this.setMeta(attribute, value)
+            }
+        },
+        setMeta(att, val) {
+            console.log("setMeta", att, val)
+            this.workingGrid.meta[att] = val;
+
+        },
+        setCells(att, val) {
+            console.log("setCells: ", att, val)
 
             for (let i = 0; i < this.maxCellAmount; i++) {
+
                 this.workingGrid.cells[i][att] = val
+
+
             }
         },
 
+        setHSL(attribute, value) {
+            console.log("setHSL", attribute, value)
+            if (attribute === 'backgroundColor') {
+                this.setCellDesign("backgroundColor", value)
+            }
+            if (attribute === 'borderColor') {
+                this.setCellDesign("borderColor", value)
+            }
 
+            // if (destination === "meta" && attribute === 'backgroundColor') {
+            //     this.setMeta("backgroundColor", value)
+            // }
+
+
+        }
     }
 })

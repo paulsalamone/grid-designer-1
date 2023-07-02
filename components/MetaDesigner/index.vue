@@ -9,7 +9,7 @@
 <label for="rows">Rows: {{rows}}</label><br/>
 
 <input name="rows" type="range" min="1" :max="store.maxRows" v-model="rows"
-@change="store.handleMeta('rows', rows)"
+@change="store.setMeta('rows', rows)"
 />
 <br/><br/>
 
@@ -17,23 +17,23 @@
 
 <label for="columns">Columns: {{columns}}</label><br/>
 
-<input name="columns" type="range" min="1" :max="store.maxColumns" v-model="columns" @change="store.handleMeta('columns', columns)"/>
+<input name="columns" type="range" min="1" :max="store.maxColumns" v-model="columns" @change="store.setMeta('columns', columns)"/>
 </div>
 <br/><br/>
 <!-- GAP -->
 <label for="gap">Gap: {{gap}}</label><br/>
 
-<input name="gap" type="range" min="1" max="40" v-model="gap" @change="store.handleMeta('gap', gap)"/>
+<!-- <input name="gap" type="range" min="1" max="10" v-model="gap" @change="store.setMeta('gap', gap)"/> -->
+<o-slider name="gap" min="1" max="10" destination="meta"/>
+
 <br/><br/>
 
 <!-- BG COLOR -->
-<label for="backgroundColor">BG Color: {{backgroundColor}}</label><br/>
+<o-slider name="backgroundColor" paramType="HSL" destination="meta"/>
 
-<input name="backgroundColor" type="range" min="1" max="360" v-model="backgroundColor" @change="store.handleMeta('backgroundColor', backgroundColor)"/>
 
 <div v-if="store.gridLoaded">
 <br /><br />
-
 <p>READOUT:</p>
 <p>maxCellAmount: {{store.maxCellAmount}}</p>
 <p>visibleCellAmount: {{store.visibleCellAmount}}</p>

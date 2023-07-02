@@ -4,15 +4,13 @@
 </h4>
 <!-- BACKGROUND COLOR -->
 <h5>Background:</h5>
-<cell-designer-slider paramType="HSL"/>
+<o-slider paramType="HSL" destination="cellBackgrounds"/>
 <button @click.prevent="store.randomizeCells('backgroundColor')" >Randomize Colors</button>
 <!-- BORDER -->
 
-<!-- <label for="borderWidth">Border Width: {{borderWidth}}</label><br/>
-<input name="borderWidth" type="range" min="0" :max="store.maxCellBorderWidth" step="1" v-model="borderWidth" @change="store.setCellDesign('borderWidth', borderWidth)"/>
-<br/><br/> -->
+<o-slider paramType="HSL" destination="cellBorders"/>
 
-<cell-designer-slider name="borderWidth" min="0" :max="store.maxCellBorderWidth" step="1"/>
+<o-slider name="borderWidth" min="0" :max="store.maxCellBorderWidth" step="1"/>
 
 
 <p>{{borderWidth}}</p>
