@@ -130,13 +130,11 @@ export const useGridStore = defineStore('grid', {
 
         },
         setCellDesign(att, val) {
-            console.log("setCellDesign", att, val)
+            console.log("setCellDesign: ", att, val)
 
             for (let i = 0; i < this.maxCellAmount; i++) {
                 this.workingGrid.cells[i][att] = val
             }
-
-
         },
 
 

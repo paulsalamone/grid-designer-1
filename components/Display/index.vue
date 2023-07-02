@@ -94,7 +94,7 @@ const handleLoadGrid = () => {
     grid-template-rows: 1fr 60px;
     justify-content: center;
     border: 15px solid #ccc;
-
+    overflow: hidden;
     &-grid {
         display: grid;
         border: 1px solid black;
@@ -106,6 +106,10 @@ const handleLoadGrid = () => {
         border: 1px solid black;
         background-color: #bbb;
     }
+}
+
+.display > * {
+  min-width: 0px;
 }
 
 .cell {

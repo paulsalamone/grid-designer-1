@@ -2,9 +2,19 @@
 <div>
 <h4>Cell Designer
 </h4>
-<label for="borderWidth">Border Width: {{borderWidth}}</label><br/>
+<!-- BACKGROUND COLOR -->
+<h5>Background:</h5>
+<cell-designer-slider paramType="HSL"/>
+<button @click.prevent="store.randomizeCells('backgroundColor')" >Randomize Colors</button>
+<!-- BORDER -->
+
+<!-- <label for="borderWidth">Border Width: {{borderWidth}}</label><br/>
 <input name="borderWidth" type="range" min="0" :max="store.maxCellBorderWidth" step="1" v-model="borderWidth" @change="store.setCellDesign('borderWidth', borderWidth)"/>
-<br/><br/>
+<br/><br/> -->
+
+<cell-designer-slider name="borderWidth" min="0" :max="store.maxCellBorderWidth" step="1"/>
+
+
 <p>{{borderWidth}}</p>
 <p>maxCellBorderWidth: {{maxCellBorderWidth}}</p>
 <br/><br/>
@@ -12,7 +22,7 @@
 <input name="borderColor" type="range" min="1" max="360" v-model="borderColor" @change="store.setCellDesign('borderColor', borderColor)"/>
 <br/><br/>
 <br/><br/>
-<button @click.prevent="store.randomizeCells('backgroundColor')" >Randomize Colors</button>
+
 </div>
 </template>
 
