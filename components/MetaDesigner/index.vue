@@ -1,43 +1,21 @@
 <template>
 <div>
-<h4>Meta Designer
-</h4>
-
-<!-- ROWS -->
 
 <div>
-<label for="rows">Rows: {{rows}}</label><br/>
+<o-slider name="rows" min="1" :max="store.maxRows" destination="meta"/>
 
-<input name="rows" type="range" min="1" :max="store.maxRows" v-model="rows"
-@change="store.setMeta('rows', rows)"
-/>
-<br/><br/>
+<o-slider name="columns" min="1" :max="store.maxColumns" destination="meta"/>
 
-<!-- COLS -->
-
-<label for="columns">Columns: {{columns}}</label><br/>
-
-<input name="columns" type="range" min="1" :max="store.maxColumns" v-model="columns" @change="store.setMeta('columns', columns)"/>
+<o-slider name="gap" min="0" max="10" destination="meta"/>
 </div>
-<br/><br/>
-<!-- GAP -->
-<label for="gap">Gap: {{gap}}</label><br/>
-
-<!-- <input name="gap" type="range" min="1" max="10" v-model="gap" @change="store.setMeta('gap', gap)"/> -->
-<o-slider name="gap" min="1" max="10" destination="meta"/>
-
-<br/><br/>
 
 <!-- BG COLOR -->
 <o-slider name="backgroundColor" paramType="HSL" destination="meta"/>
 
+<o-randomizer></o-randomizer>
 
-<div v-if="store.gridLoaded">
-<br /><br />
-<p>READOUT:</p>
-<p>maxCellAmount: {{store.maxCellAmount}}</p>
-<p>visibleCellAmount: {{store.visibleCellAmount}}</p>
-</div>
+
+
 </div>
 </template>
 

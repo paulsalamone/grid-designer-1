@@ -1,7 +1,7 @@
 <template>
 <div>
 
-<div v-if="paramType === 'HSL'">
+<div v-if="paramType === 'HSL'" class="slider"> 
 <!-- <p>{{destination}}:</p> -->
 <label for="hue">Hue: {{hsl.hue}}</label><br/>
 <input name="hue" type="range" min="0" max="360" step="1" v-model="hsl.hue" @change="store.setParameter(destination, name, hslString)">
@@ -16,7 +16,7 @@
 <!-- <p>{{hsl}}</p> -->
 </div>
 
-<div v-else>
+<div v-else class="slider">
 <label :for="name">{{name}}: {{sliderValue}}</label><br/>
 <input :name="name" type="range" :min="min" :max="max" :step="step" v-model="sliderValue" @change="store.setParameter(destination, name, sliderValue)"/>
 <br/><br/>
@@ -73,3 +73,11 @@ required: true
     
 })
 </script>
+
+<style scoped lang="scss">
+label {
+        text-transform: capitalize;
+
+   }
+
+</style>

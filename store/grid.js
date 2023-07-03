@@ -21,6 +21,7 @@ export const useGridStore = defineStore('grid', {
         },
         gridLoaded: false,
 
+
     }),
     getters: {
         visibleCellAmount: (state) => {
@@ -105,27 +106,7 @@ export const useGridStore = defineStore('grid', {
 
         // cells
 
-        randomHSL() {
-            const H = Math.floor(Math.random() * 360)
-            const S = Math.floor(Math.random() * 100)
-            const L = Math.floor(Math.random() * 100)
 
-            return `hsl(${H}, ${S}%, ${L}%)`;
-
-        },
-        randomizeCells(att) {
-            if (att === "backgroundColor");
-
-            for (let i = 0; i < this.maxCellAmount; i++) {
-                const color = this.randomHSL();
-                this.workingGrid.cells[i][att] = color;
-                console.log("this.workingGrid.cells[i][att]", this.workingGrid.cells[i][att])
-            }
-
-
-
-
-        },
 
         setParameter(destination, attribute, value) {
 
@@ -169,6 +150,66 @@ export const useGridStore = defineStore('grid', {
             // }
 
 
-        }
+        },
+
+        // RANDOMIZERS:
+
+        setIndividualCells(index, att, factor) {
+
+            const currentCell = this.workingGrid.cells[index].backgroundColor;
+            const currentHue = currentCell.split(",")[0].split("(")[1];
+            const currentSaturation = currentCell.split(",")[1].split("%")[0];
+            const currentLightness = currentCell.split(",")[2].split("%")[0];
+
+            if (att === "")
+                this.workingGrid.cells[index][att] = val
+
+        },
+        handleRandomizer(selected, linked) {
+            console.log("handleRandomize", selected, linked)
+            const destination = selected[0]
+            const section = selected[1]
+            const factor = selected[2]
+
+            if (destination === "meta") {
+                // this.workingGrid.meta[att] = val;
+            }
+
+            if (destination == "cell") {
+
+                if (section === "background") {
+
+                    for (let i = 0; i < this.maxCellAmount; i++) {
+
+                        this.setIndividualCells(i, "backgroundColor", factor)
+
+
+
+                    }
+
+
+
+                }
+
+            }
+
+        },
+
+        randomHSL(factor = "hue") {
+            const H = Math.floor(Math.random() * 360)
+            const S = Math.floor(Math.random() * 100)
+            const L = Math.floor(Math.random() * 100)
+
+            if (factor === "hue") return `hsl(${H}, 100%, 50%)`;
+            if (factor === "saturation") return `hsl(100, ${S}%, 50%)`;
+            if (factor === "lightness") return `hsl(100, 100%, ${L}%)`;
+
+        },
+        randomizeCells(att) {
+
+
+
+
+        },
     }
 })

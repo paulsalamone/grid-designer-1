@@ -4,22 +4,21 @@
 </h4>
 <!-- BACKGROUND COLOR -->
 <h5>Background:</h5>
-<o-slider paramType="HSL" destination="cellBackgrounds"/>
-<button @click.prevent="store.randomizeCells('backgroundColor')" >Randomize Colors</button>
+
+<o-slider name="backgroundColor" paramType="HSL" destination="cells"/>
+
+<!-- <button @click.prevent="store.randomizeCells('backgroundColor')" >Randomize Colors</button> -->
 <!-- BORDER -->
+<h5>Border:</h5>
 
-<o-slider paramType="HSL" destination="cellBorders"/>
-
-<o-slider name="borderWidth" min="0" :max="store.maxCellBorderWidth" step="1"/>
+<o-slider paramType="HSL" destination="cells" name="borderColor" />
 
 
-<p>{{borderWidth}}</p>
-<p>maxCellBorderWidth: {{maxCellBorderWidth}}</p>
-<br/><br/>
-<label for="borderWidth">Border Color: {{borderColor}}</label><br/>
-<input name="borderColor" type="range" min="1" max="360" v-model="borderColor" @change="store.setCellDesign('borderColor', borderColor)"/>
-<br/><br/>
-<br/><br/>
+<o-slider name="borderWidth" min="0" :max="store.maxCellBorderWidth" step="1" destination="cells"/>
+
+
+
+
 
 </div>
 </template>
