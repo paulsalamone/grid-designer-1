@@ -134,5 +134,6 @@ const handleLoadGrid = () => {
   // background-color: teal;
   // padding: 1rem;
   border: 1px solid black;
+  transition: all 0.3s ease-in-out;
 }
 </style>
