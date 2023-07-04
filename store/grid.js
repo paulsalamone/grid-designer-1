@@ -28,7 +28,7 @@ export const useGridStore = defineStore("grid", {
         x: 10,
         y: 10,
         blur: 10,
-        color: "black"
+        color: "#00ff44"
       }
     },
     defaultGrid: {
@@ -202,6 +202,24 @@ export const useGridStore = defineStore("grid", {
 
       if (att === "") this.workingGrid.cells[index][att] = val;
     },
+    getRandomHexColor() {
+        // Generate three random values for red, green, and blue channels
+        const red = Math.floor(Math.random() * 256);
+        const green = Math.floor(Math.random() * 256);
+        const blue = Math.floor(Math.random() * 256);
+      
+        // Convert the decimal values to hexadecimal strings
+        const redHex = red.toString(16).padStart(2, '0');
+        const greenHex = green.toString(16).padStart(2, '0');
+        const blueHex = blue.toString(16).padStart(2, '0');
+      
+        // Combine the hexadecimal values and return the color code
+        let colorCode;
+        colorCode = '#' + redHex + greenHex + blueHex;
+        console.log("colorCode", colorCode)
+        return colorCode;
+      },
+      
     handleRandomizer(selected, linked) {
       console.log("handleRandomizer", selected);
       const destination = selected[0];
@@ -224,6 +242,18 @@ export const useGridStore = defineStore("grid", {
         const rand = Math.floor(
           Math.random() * this.maxRandom[section][attribute]
         );
+
+        if(section === "boxShadow" && attribute === "color"){
+            console.log("box col")
+// const colour = this.getRandomHexColor()
+this.workingGrid.cells[i][section][attribute] = this.getRandomHexColor()
+console.log("section, attribute", section, attribute)
+console.log("this.workingGrid.cells[i][section][attribute]", this.workingGrid.cells[i][section][attribute]);
+
+continue;
+
+        }
+
 
         if (attribute === "style") {
           // handle style

@@ -30,11 +30,11 @@
             }px`,
             borderStyle: `${store.workingGrid.cells[index].border.style}`,
             transform: `translateX(${store.workingGrid.cells[index].transform.translateX}px) translateY(${store.workingGrid.cells[index].transform.translateY}px) rotate(${store.workingGrid.cells[index].transform.rotate}deg) scale(${store.workingGrid.cells[index].transform.scale})`,
-            boxShadow: `${store.workingGrid.cells[index].boxShadow.x}px ${store.workingGrid.cells[index].boxShadow.y}px ${store.workingGrid.cells[index].boxShadow.blur}px black`
+            boxShadow: `${store.workingGrid.cells[index].boxShadow.x}px ${store.workingGrid.cells[index].boxShadow.y}px ${store.workingGrid.cells[index].boxShadow.blur}px ${store.workingGrid.cells[index].boxShadow.color}`
           }"
 
         >
-        <!-- {{ `${store.workingGrid.cells[index].boxShadow.x}px ${store.workingGrid.cells[index].boxShadow.y}px ${store.workingGrid.cells[index].boxShadow.blur}px #00ff00` }} -->
+        <!-- {{ `${store.workingGrid.cells[index].boxShadow.x}px ${store.workingGrid.cells[index].boxShadow.y}px ${store.workingGrid.cells[index].boxShadow.color}` }} -->
         <!-- {{ `translateX(${store.workingGrid.cells[index].transform.translateX}px) translateY(${store.workingGrid.cells[index].transform.translateY}px) rotate(${store.workingGrid.cells[index].transform.rotate}deg)` }} -->
         <!-- {{ store.workingGrid.cells[index].transform.scale }} -->
           <!-- {{
