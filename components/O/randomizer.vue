@@ -19,12 +19,13 @@
 <option v-for="(attribute, index) in attributes.cell.boxShadow" :key="index" :value="['cell', 'boxShadow', attribute]">{{attribute}}</option>
 </optgroup>
 </select>
-<label for="linked">Linked</label>
+<!-- <label for="linked">Linked</label> -->
 <!-- <input id="linked" type="checkbox" v-model="linked"/>
 <p>Selected: {{selectedAttribute}}</p> -->
 
-<p>strength: -O-----</p>
-<button type="" @click.prevent="store.handleRandomizer(selectedAttribute, linked)">Randomize!</button>
+<label for="strength">Strength: {{ store.randomizerStrength }} </label>
+<input type="range" min="1" max="10" name="strength" v-model="store.randomizerStrength">
+<button type="" @click.prevent="store.handleRandomizer(selectedAttribute, linked)">Randomize! </button>
 </div>
 </template>
 
@@ -35,9 +36,10 @@ const store = useGridStore()
 
 const selectedAttribute = ref(["cell", "background", "hue"])
 
-const linkedCategory = (computed)  => {
-    // if (selectedAttribute === ""
-}
+// const strength = ref(10)
+// const linkedCategory = (computed)  => {
+//     // if (selectedAttribute === ""
+// }
 
 
 const linked = ref(true)

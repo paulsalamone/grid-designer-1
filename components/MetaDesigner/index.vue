@@ -3,7 +3,7 @@
 
 <div>
 <o-slider destination="meta" attribute="rows" name="rows" min="1" :max="store.maxRows" />
-
+<!-- RANDOM ROWS -->
 <o-slider destination="meta" attribute="columns" name="columns" min="1" :max="store.maxColumns" />
 
 <o-slider destination="meta" attribute="gap" name="gap" min="0" max="20" />

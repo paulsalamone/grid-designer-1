@@ -18,7 +18,7 @@
 <div v-else class="slider">
 <label :for="name">{{name}}: {{sliderValue}}</label><br/>
 <input :name="name" type="range" :min="min" :max="max" :step="step" v-model="sliderValue" @change="store.setParameter(destination, section, attribute, sliderValue)"/>
-<br/><br/>
+<!-- <br/><br/> -->
 </div>
 
 </div>

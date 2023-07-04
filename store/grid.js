@@ -9,7 +9,7 @@ export const useGridStore = defineStore("grid", {
       background: {
         hue: 360,
         saturation: 100,
-        lightness: 100,
+        lightness: 50,
       },
       border: {
         hue: 360,
@@ -20,16 +20,16 @@ export const useGridStore = defineStore("grid", {
       },
       transform: {
         scale: 2,
-        translateX: 50,
-        translateY: 50,
-        rotate: 20,
+        translateX: 150,
+        translateY: 150,
+        rotate: 90,
       },
       boxShadow: {
         x: 10,
         y: 10,
         blur: 10,
-        color: "#00ff44"
-      }
+        color: "#00ff44",
+      },
     },
     defaultGrid: {
       type: "grid",
@@ -46,6 +46,7 @@ export const useGridStore = defineStore("grid", {
       cells: [],
     },
     gridLoaded: false,
+    randomizerStrength: 2,
   }),
   getters: {
     visibleCellAmount: (state) => {
@@ -203,29 +204,39 @@ export const useGridStore = defineStore("grid", {
       if (att === "") this.workingGrid.cells[index][att] = val;
     },
     getRandomHexColor() {
-        // Generate three random values for red, green, and blue channels
-        const red = Math.floor(Math.random() * 256);
-        const green = Math.floor(Math.random() * 256);
-        const blue = Math.floor(Math.random() * 256);
-      
-        // Convert the decimal values to hexadecimal strings
-        const redHex = red.toString(16).padStart(2, '0');
-        const greenHex = green.toString(16).padStart(2, '0');
-        const blueHex = blue.toString(16).padStart(2, '0');
-      
-        // Combine the hexadecimal values and return the color code
-        let colorCode;
-        colorCode = '#' + redHex + greenHex + blueHex;
-        console.log("colorCode", colorCode)
-        return colorCode;
-      },
-      
+      // Generate three random values for red, green, and blue channels
+      const red = Math.floor(Math.random() * 256);
+      const green = Math.floor(Math.random() * 256);
+      const blue = Math.floor(Math.random() * 256);
+
+      // Convert the decimal values to hexadecimal strings
+      const redHex = red.toString(16).padStart(2, "0");
+      const greenHex = green.toString(16).padStart(2, "0");
+      const blueHex = blue.toString(16).padStart(2, "0");
+
+      // Combine the hexadecimal values and return the color code
+      let colorCode;
+      colorCode = "#" + redHex + greenHex + blueHex;
+      console.log("colorCode", colorCode);
+      return colorCode;
+    },
+
+    randomizeTemplate(section) {
+      console.log("randomizeTemplate for: ", section);
+
+      //
+    },
     handleRandomizer(selected, linked) {
       console.log("handleRandomizer", selected);
+
+      
       const destination = selected[0];
       const section = selected[1];
       const attribute = selected[2];
 
+      if (destination === "meta" && section === "template") {
+        this.randomizeTemplate(section);
+      }
       const styles = [
         "dotted",
         "dashed",
@@ -239,41 +250,46 @@ export const useGridStore = defineStore("grid", {
       ];
 
       for (let i = 0; i < this.maxCellAmount; i++) {
-        const rand = Math.floor(
-          Math.random() * this.maxRandom[section][attribute]
+        const rand1 = Math.floor(
+          Math.random() * this.maxRandom[section][attribute] 
         );
 
-        if(section === "boxShadow" && attribute === "color"){
-            console.log("box col")
-// const colour = this.getRandomHexColor()
-this.workingGrid.cells[i][section][attribute] = this.getRandomHexColor()
-console.log("section, attribute", section, attribute)
-console.log("this.workingGrid.cells[i][section][attribute]", this.workingGrid.cells[i][section][attribute]);
+        // all this does is cut down the final number
+        const rand = rand1 / this.randomizerStrength
+        // console.log("attenuated", attenuated)
+console.log("rand:", rand)
+        if (section === "boxShadow" && attribute === "color") {
+          console.log("box col");
+          // const colour = this.getRandomHexColor()
+          this.workingGrid.cells[i][section][attribute] =
+            this.getRandomHexColor();
+          console.log("section, attribute", section, attribute);
+          console.log(
+            "this.workingGrid.cells[i][section][attribute]",
+            this.workingGrid.cells[i][section][attribute]
+          );
 
-continue;
-
+          continue;
         }
-
 
         if (attribute === "style") {
-          // handle style
-
           const randStyle = styles[Math.floor(Math.random() * styles.length)];
-
           this.workingGrid.cells[i][section][attribute] = randStyle;
-        } else if (attribute === "scale") {
+          continue;
+        } 
+        
+        if (attribute === "scale") {
           const scaler = Math.floor(Math.random() * 10);
-
-          // console.log("scaler:", scaler)
-
-          // Generate a random number within the range
           this.workingGrid.cells[i][section][attribute] = `0.${scaler}`;
-
           console.log("scale::", this.workingGrid.cells[i][section][attribute]);
+          continue;
 
-        } else {
+        } 
+
+        // STANDARD PARAM
+          
           this.workingGrid.cells[i][section][attribute] = rand;
-        }
+        
       }
     },
 
