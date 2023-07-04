@@ -13,6 +13,7 @@ destination="cells" section="background"  />
 
 <o-slider name="borderWidth" destination="cells"  section="border" attribute="width" min="0" :max="store.maxCellBorderWidth" step="1" />
 
+<o-slider name="borderRadius" destination="cells"  section="border" attribute="radius" min="0" :max="store.maxCellBorderWidth" step="1" />
 
 
 

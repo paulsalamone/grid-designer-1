@@ -6,7 +6,7 @@
 
 <o-slider destination="meta" attribute="columns" name="columns" min="1" :max="store.maxColumns" />
 
-<o-slider destination="meta" attribute="gap" name="gap" min="0" max="10" />
+<o-slider destination="meta" attribute="gap" name="gap" min="0" max="20" />
 </div>
 
 <!-- BG COLOR -->

@@ -68,7 +68,7 @@ const attributes = ref({
             "scale",
             "translateX",
             "translateY",
-            "rotation"
+            "rotate"
         ],
         boxShadow: [
             "x",
