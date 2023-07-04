@@ -1,16 +1,19 @@
 <template>
-<div>
+<div class="meta-designer">
 
 <div>
-<o-slider name="rows" min="1" :max="store.maxRows" destination="meta"/>
+<o-slider destination="meta" attribute="rows" name="rows" min="1" :max="store.maxRows" />
 
-<o-slider name="columns" min="1" :max="store.maxColumns" destination="meta"/>
+<o-slider destination="meta" attribute="columns" name="columns" min="1" :max="store.maxColumns" />
 
-<o-slider name="gap" min="0" max="10" destination="meta"/>
+<o-slider destination="meta" attribute="gap" name="gap" min="0" max="10" />
 </div>
 
 <!-- BG COLOR -->
-<o-slider name="backgroundColor" paramType="HSL" destination="meta"/>
+<o-slider  paramType="HSL" destination="meta" name="backgroundColor" />
+
+
+
 
 <o-randomizer></o-randomizer>
 

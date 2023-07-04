@@ -4,21 +4,20 @@
 <div v-if="paramType === 'HSL'" class="slider"> 
 <!-- <p>{{destination}}:</p> -->
 <label for="hue">Hue: {{hsl.hue}}</label><br/>
-<input name="hue" type="range" min="0" max="360" step="1" v-model="hsl.hue" @change="store.setParameter(destination, name, hslString)">
-{{attribute}}
+<input name="hue" type="range" min="0" max="360" step="1" v-model="hsl.hue" @change="store.setParameter(destination, section, 'hue', hsl.hue)">
 <br/><br/>
 <label for="saturation">Saturation: {{hsl.saturation}}</label><br/>
-<input name="saturation" type="range" min="0" max="100" step="1" v-model="hsl.saturation" @change="store.setParameter(destination, name, hslString)">
+<input name="saturation" type="range" min="0" max="100" step="1" v-model="hsl.saturation" @change="store.setParameter(destination, section, 'saturation', hsl.saturation)">
 <br/><br/>
 <label for="lightness">Lightness: {{hsl.lightness}}</label><br/>
-<input name="lightness" type="range" min="0" max="100" step="1" v-model="hsl.lightness" @change="store.setParameter(destination, name, hslString)">
+<input name="lightness" type="range" min="0" max="100" step="1" v-model="hsl.lightness" @change="store.setParameter(destination, section, 'lightness', hsl.lightness)">
 <br/><br/>
 <!-- <p>{{hsl}}</p> -->
 </div>
 
 <div v-else class="slider">
 <label :for="name">{{name}}: {{sliderValue}}</label><br/>
-<input :name="name" type="range" :min="min" :max="max" :step="step" v-model="sliderValue" @change="store.setParameter(destination, name, sliderValue)"/>
+<input :name="name" type="range" :min="min" :max="max" :step="step" v-model="sliderValue" @change="store.setParameter(destination, section, attribute, sliderValue)"/>
 <br/><br/>
 </div>
 
@@ -39,22 +38,27 @@ const hsl = ref({
 
 const hslString = computed(() => {
     const str =  `hsl(${hsl.value.hue}, ${hsl.value.saturation}%, ${hsl.value.lightness}%)`
-    // console.log("typoeof str", typeof str)
     return str
 })
-// const hueValue = ref(null)
-// const saturationValue = ref(null)
-// const lightnessValue = ref(null)
+
 const props = defineProps({
     paramType: {
         type: String,
         required: false
     },
+    name: {
+        type: String,
+        required: true
+    },
     destination: {
         type: String,
         required: false
     },
-    name: {
+    section: {
+        type: String,
+        required: true
+    },
+    attribute: {
         type: String,
         required: true
     },
@@ -70,6 +74,7 @@ required: true
         type: Number,
         required: true
     },
+
     
 })
 </script>

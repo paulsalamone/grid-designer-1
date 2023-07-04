@@ -20,8 +20,10 @@
 </optgroup>
 </select>
 <label for="linked">Linked</label>
-<input id="linked" type="checkbox" v-model="linked"/>
-<p>Selected: {{selectedAttribute}}</p>
+<!-- <input id="linked" type="checkbox" v-model="linked"/>
+<p>Selected: {{selectedAttribute}}</p> -->
+
+<p>strength: -O-----</p>
 <button type="" @click.prevent="store.handleRandomizer(selectedAttribute, linked)">Randomize!</button>
 </div>
 </template>
@@ -68,13 +70,12 @@ const attributes = ref({
             "translateY",
             "rotation"
         ],
-        boxShadow: {
-            x: "x",
-            y: "y",
-            blur: "blur",
-            spread: "spread",
-            color: "color"
-        }
+        boxShadow: [
+            "x",
+            "y",
+            "blur",
+            "color"
+            ]
         
 
     }

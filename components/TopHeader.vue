@@ -10,3 +10,9 @@
 </header>
 </div>
 </template>
+
+<style scoped>
+h3 {
+    color: white;
+}
+</style>

@@ -4,7 +4,7 @@ export const useGridStore = defineStore('grid', {
     state: () => ({
         maxRows: 40,
         maxColumns: 40,
-        maxCellBorderWidth: 10,
+        maxCellBorderWidth: 20,
         defaultGrid: {
             "type": "grid",
             "meta": {
@@ -51,18 +51,49 @@ export const useGridStore = defineStore('grid', {
             for (let i = 0; i < this.maxCellAmount; i++) {
 
                 this.workingGrid.cells.push(
-                    { id: i, backgroundColor: "hsl(100,100%,100%)", borderWidth: "1", borderColor: "hsl(100,100%,50%)" }
+                    { id: i, 
+                        background: {
+                            hue: 200,
+                            saturation: 80,
+                            lightness: 80
+                        },
+                        border: {
+                            hue: 200,
+                            saturation: 100,
+                            lightness: 50,
+                            width: 1,
+                            style: "solid",
+                            radius: 10
+                        },
+                      transform: {
+                        scale: 1,
+                        translateX: 0,
+                        translateY: 0,
+                        rotation: 0
+                      } ,
+                      x: "x",
+                      y: "y",
+                      blur: "blur",
+                      color: "color"
+                    }
                 )
 
             }
 
-            // console.log("default grid loaded:", this.workingGrid.cells)
+            // assign compound variables:
+            for (let i = 0; i < this.maxCellAmount; i++) {
 
+                const cell = this.workingGrid.cells[i]
+                
+                cell["backgroundColor"] = `hsl(${cell.background.hue},${cell.background.saturation}%,${cell.background.lightness}%)`;
 
+                cell["borderColor"] = `hsl(${cell.border.hue},${cell.border.saturation}%,${cell.border.lightness}%)`
 
+                // @TODO: transform and box shadow
+                // cell["transform"] = ``
+                // console.log(cell)
 
-
-
+            }
 
             if (this.workingGrid.meta !== null) {
                 this.gridLoaded = true;
@@ -108,12 +139,12 @@ export const useGridStore = defineStore('grid', {
 
 
 
-        setParameter(destination, attribute, value) {
+        setParameter(destination, section, attribute, value) {
 
-            console.log("setParameter", destination, attribute, value)
+            console.log("setParameter", destination, section, attribute, value)
 
             if (destination === "cells") {
-                this.setCells(attribute, value)
+                this.setCells(section, attribute, value)
             }
 
             if (destination === "meta") {
@@ -125,12 +156,13 @@ export const useGridStore = defineStore('grid', {
             this.workingGrid.meta[att] = val;
 
         },
-        setCells(att, val) {
-            console.log("setCells: ", att, val)
+        setCells(section, att, val) {
+            console.log("setCells: ", section, att, val)
 
             for (let i = 0; i < this.maxCellAmount; i++) {
 
-                this.workingGrid.cells[i][att] = val
+                // console.log("ppp this.workingGrid.cells[i][section][att]", this.workingGrid.cells[i][section])
+                this.workingGrid.cells[i][section][att] = val
 
 
             }
@@ -166,32 +198,56 @@ export const useGridStore = defineStore('grid', {
 
         },
         handleRandomizer(selected, linked) {
-            console.log("handleRandomize", selected, linked)
             const destination = selected[0]
             const section = selected[1]
-            const factor = selected[2]
+            const attribute = selected[2]
 
-            if (destination === "meta") {
-                // this.workingGrid.meta[att] = val;
-            }
-
-            if (destination == "cell") {
-
-                if (section === "background") {
-
-                    for (let i = 0; i < this.maxCellAmount; i++) {
-
-                        this.setIndividualCells(i, "backgroundColor", factor)
-
-
-
-                    }
-
-
-
+            const max = {
+                background: {
+                    hue: 360,
+                    saturation: 100,
+                    lightness: 100,
+                },
+                border: {
+                    hue: 360,
+                    saturation: 100,
+                    lightness: 100,
+                    width: 20,
+                    radius: 20,
                 }
+            }
+
+            const styles = [
+                "dotted",
+                "dashed",
+                "solid",
+                "double",
+                "groove",
+                "ridge",
+                "inset",
+                "outset",
+                "none"
+            ]
+  
+
+        for (let i = 0; i < this.maxCellAmount; i++) {
+            const rand = Math.floor(Math.random() * max[section][attribute])
+
+            if(attribute === "style"){
+// handle style
+
+const randStyle = styles[Math.floor(Math.random() * styles.length)]
+
+this.workingGrid.cells[i][section][attribute] = randStyle
+
+
+            } else {
+                this.workingGrid.cells[i][section][attribute] = rand;
 
             }
+
+       
+        }
 
         },
 
